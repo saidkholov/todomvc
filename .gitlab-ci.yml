@@ -1,5 +1,10 @@
+image: docker
+
+services:
+  - docker:dind
+
 before_script:
-  - docker-compose up
+  - docker-compose up -d
 
 run_tests:
   script:
