@@ -1,11 +1,20 @@
-image: docker
+image: docker:stable
 
 services:
   - docker:dind
 
 before_script:
-  - docker-compose up -d
+  - apk add --no-cache py-pip
+  - pip install docker-compose
+  - docker info
+  - docker-compose --version
 
-run_tests:
+build:
+  stage: build
+  script:
+    - docker-compose up -d
+
+test:
+  stage: test
   script:
     - docker-compose exec client npm run test
