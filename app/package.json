@@ -20,7 +20,8 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "eject": "react-scripts eject",
-    "test": "react-scripts test --env=node"
+    "test": "react-scripts test --env=node",
+    "test:ci": "react-scripts test --env=node --ci --coverage"
   },
   "browserslist": [
     ">0.2%",
