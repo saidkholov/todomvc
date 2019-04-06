@@ -1,0 +1,6 @@
+before_script:
+  - docker-compose up
+
+run_tests:
+  script:
+    - docker-compose exec client npm run test
