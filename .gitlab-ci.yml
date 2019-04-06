@@ -2,13 +2,8 @@ before_script:
   - docker info
   - docker-compose --version
 
-build:
-  stage: build
-  script:
-    - docker-compose build
-
 test:
   stage: test
   script:
-    - docker-compose up -d
+    - docker-compose up --build -d
     - docker-compose exec -T client npm run test:ci
