@@ -5,9 +5,10 @@ before_script:
 build:
   stage: build
   script:
-    - docker-compose up --build -d
+    - docker-compose build
 
 test:
   stage: test
   script:
+    - docker-compose up -d
     - docker-compose exec client npm run test:ci
