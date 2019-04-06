@@ -11,4 +11,4 @@ test:
   stage: test
   script:
     - docker-compose up -d
-    - docker-compose exec client npm run test:ci
+    - docker-compose exec -T client npm run test:ci
