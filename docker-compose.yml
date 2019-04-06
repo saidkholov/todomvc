@@ -5,8 +5,7 @@ services:
       context: ./app/
     command: npm start
     volumes:
-      - ./app/public:/app/public
-      - ./app/src:/app/src
+      - ./app/:/app/
       - /app/node_modules
     ports:
       - "3000:3000"
