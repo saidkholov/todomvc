@@ -6,7 +6,7 @@ build:
   stage: build
   script:
     - docker-compose build
-    -
+
 test:
   stage: test
   script:
