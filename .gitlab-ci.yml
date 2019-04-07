@@ -6,18 +6,18 @@ build:
   stage: build
   script:
     - docker-compose build
-    - docker run -d -p 3000:3000 -v /var/run/docker.sock:/tmp/docker.sock:ro jwilder/nginx-proxy
-
+    -
 test:
   stage: test
   script:
-    - VIRTUAL_HOST=$CI_COMMIT_REF_NAME.$APPS_DOMAIN  docker-compose up -d
+    - docker-compose up -d client
     - docker-compose exec -T client npm run test:ci
+    - docker-compose stop client
 
 review:
   stage: deploy
   script:
-    - VIRTUAL_HOST=$CI_COMMIT_REF_NAME.$APPS_DOMAIN  docker-compose up -d -p $CI_COMMIT_REF_NAME
+    - VIRTUAL_HOST=$CI_COMMIT_REF_NAME.$APPS_DOMAIN docker-compose up -d -p $CI_COMMIT_REF_NAME client
   environment:
     name: review/$CI_COMMIT_REF_NAME
     url: http://$CI_COMMIT_REF_NAME.$APPS_DOMAIN:3000
@@ -41,7 +41,7 @@ stop_review:
 staging:
   stage: deploy
   script:
-    - VIRTUAL_HOST=$APPS_DOMAIN  docker-compose up -d
+    - VIRTUAL_HOST=$APPS_DOMAIN docker-compose up -d
   environment:
     name: staging
     url: http://$APPS_DOMAIN
