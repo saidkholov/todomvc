@@ -36,3 +36,4 @@ This can be fixed by ejecting the create-react-app and upgrading jest manually.
     - update necessary packages
     - set up test coverage threshold
     - set up precommit hooks
+7. Create a CloudFormation/Terraform template for build runner to be able to create new runners on demand
