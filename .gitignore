@@ -9,5 +9,5 @@ build
 # misc
 .DS_Store
 npm-debug.log
-.idea
+.idea/
 app/coverage
