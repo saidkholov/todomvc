@@ -19,7 +19,7 @@ review:
   script:
     - rsync -av --delete . /home/gitlab-runner/deployment/$CI_COMMIT_REF_SLUG
     - cd /home/gitlab-runner/deployment/$CI_COMMIT_REF_SLUG
-    - VIRTUAL_HOST=$CI_COMMIT_REF_SLUG.$APPS_DOMAIN docker-compose -p $CI_COMMIT_REF_SLUG up --build -d client
+    - VIRTUAL_HOST=$CI_COMMIT_REF_SLUG.$APPS_DOMAIN docker-compose -p $CI_COMMIT_REF_SLUG up -d client
     - docker-compose exec -T client npm run test:ci # a workaround for coverage
   environment:
     name: review/$CI_COMMIT_REF_SLUG
@@ -47,7 +47,7 @@ staging:
   script:
     - rsync -av --delete . /home/gitlab-runner/deployment/staging
     - cd /home/gitlab-runner/deployment/staging
-    - VIRTUAL_HOST=$APPS_DOMAIN docker-compose up --build -d client
+    - VIRTUAL_HOST=$APPS_DOMAIN docker-compose up -d client
     - docker-compose exec -T client npm run test:ci # a workaround for coverage
   environment:
     name: staging
