@@ -6,11 +6,11 @@ build:
   stage: build
   script:
     - docker-compose build
+    - docker-compose up -d
 
 test:
   stage: test
   script:
-    - docker-compose up -d client
     - docker-compose exec -T client npm run test:ci
     - docker-compose stop client
 
@@ -19,7 +19,7 @@ review:
   script:
     - rsync -av --delete . /home/gitlab-runner/deployment/$CI_COMMIT_REF_SLUG
     - cd /home/gitlab-runner/deployment/$CI_COMMIT_REF_SLUG
-    - VIRTUAL_HOST=$CI_COMMIT_REF_NAME.$APPS_DOMAIN docker-compose -p $CI_COMMIT_REF_NAME up -d
+    - VIRTUAL_HOST=$CI_COMMIT_REF_NAME.$APPS_DOMAIN docker-compose -p $CI_COMMIT_REF_NAME up -d client
   environment:
     name: review/$CI_COMMIT_REF_NAME
     url: http://$CI_COMMIT_REF_NAME.$APPS_DOMAIN
@@ -46,7 +46,7 @@ staging:
   script:
     - rsync -av --delete . /home/gitlab-runner/deployment/staging
     - cd /home/gitlab-runner/deployment/staging
-    - VIRTUAL_HOST=$APPS_DOMAIN docker-compose up -d
+    - VIRTUAL_HOST=$APPS_DOMAIN docker-compose up -d client
   environment:
     name: staging
     url: http://$APPS_DOMAIN
