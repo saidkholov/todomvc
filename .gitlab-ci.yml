@@ -19,7 +19,7 @@ test:
 review:
   stage: deploy
   script:
-    - rsync -av --delete --exclude=node_modules . /home/gitlab-runner/deployment/$CI_COMMIT_REF_SLUG # copy files to branch specific folder
+    - rsync -av --delete --exclude=node_modules --exclude=public/coverage . /home/gitlab-runner/deployment/$CI_COMMIT_REF_SLUG # copy files to branch specific folder
     - cd /home/gitlab-runner/deployment/$CI_COMMIT_REF_SLUG
     - VIRTUAL_HOST=$CI_COMMIT_REF_SLUG.$APPS_DOMAIN docker-compose -p $CI_COMMIT_REF_SLUG up --build -d client
     - docker-compose exec -T client npm run test:ci
@@ -49,7 +49,7 @@ stop_review:
 staging:
   stage: deploy
   script:
-    - rsync -av --delete --exclude=node_modules . /home/gitlab-runner/deployment/staging # copy files to branch staging folder
+    - rsync -av --delete --exclude=node_modules --exclude=public/coverage . /home/gitlab-runner/deployment/staging # copy files to branch staging folder
     - cd /home/gitlab-runner/deployment/staging
     - VIRTUAL_HOST=$APPS_DOMAIN docker-compose up --build -d client
     - docker-compose exec -T client npm run test:ci
