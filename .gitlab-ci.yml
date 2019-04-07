@@ -9,6 +9,8 @@ build:
 
 test:
   stage: test
+  variables:
+    GIT_STRATEGY: none
   script:
     - docker-compose up -d client
     - docker-compose exec -T client npm run test:ci
@@ -25,6 +27,8 @@ review:
     name: review/$CI_COMMIT_REF_SLUG
     url: http://$CI_COMMIT_REF_SLUG.$APPS_DOMAIN
     on_stop: stop_review
+  variables:
+    GIT_STRATEGY: none
   only:
     - branches
   except:
@@ -49,6 +53,8 @@ staging:
     - cd /home/gitlab-runner/deployment/staging
     - VIRTUAL_HOST=$APPS_DOMAIN docker-compose up --build -d client
     - docker-compose exec -T client npm run test:ci
+  variables:
+    GIT_STRATEGY: none
   environment:
     name: staging
     url: http://$APPS_DOMAIN
