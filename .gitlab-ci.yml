@@ -17,10 +17,12 @@ test:
 review:
   stage: deploy
   script:
+    - rsync -av --delete . /home/gitlab-runner/deployment/$CI_COMMIT_REF_SLUG
+    - cd /home/gitlab-runner/deployment/$CI_COMMIT_REF_SLUG
     - VIRTUAL_HOST=$CI_COMMIT_REF_NAME.$APPS_DOMAIN docker-compose -p $CI_COMMIT_REF_NAME up -d
   environment:
     name: review/$CI_COMMIT_REF_NAME
-    url: http://$CI_COMMIT_REF_NAME.$APPS_DOMAIN:3000
+    url: http://$CI_COMMIT_REF_NAME.$APPS_DOMAIN
     on_stop: stop_review
   only:
     - branches
@@ -31,6 +33,7 @@ stop_review:
   stage: deploy
   script:
     docker-compose -p $CI_COMMIT_REF_NAME down
+    rm -rf /home/gitlab-runner/deployment/$CI_COMMIT_REF_SLUG
   variables:
     GIT_STRATEGY: none
   when: manual
@@ -41,6 +44,8 @@ stop_review:
 staging:
   stage: deploy
   script:
+    - rsync -av --delete . /home/gitlab-runner/deployment/staging
+    - cd /home/gitlab-runner/deployment/staging
     - VIRTUAL_HOST=$APPS_DOMAIN docker-compose up -d
   environment:
     name: staging
