@@ -17,7 +17,7 @@ test:
 review:
   stage: deploy
   script:
-    - VIRTUAL_HOST=$CI_COMMIT_REF_NAME.$APPS_DOMAIN docker-compose up -d -p $CI_COMMIT_REF_NAME client
+    - VIRTUAL_HOST=$CI_COMMIT_REF_NAME.$APPS_DOMAIN docker-compose -p $CI_COMMIT_REF_NAME up -d
   environment:
     name: review/$CI_COMMIT_REF_NAME
     url: http://$CI_COMMIT_REF_NAME.$APPS_DOMAIN:3000
@@ -30,7 +30,7 @@ review:
 stop_review:
   stage: deploy
   script:
-    docker-compose down -p $CI_COMMIT_REF_NAME
+    docker-compose -p $CI_COMMIT_REF_NAME down
   variables:
     GIT_STRATEGY: none
   when: manual

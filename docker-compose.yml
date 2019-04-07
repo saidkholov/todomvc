@@ -1,6 +1,9 @@
 version: '3.7'
 services:
   client:
+    environment:
+      - VIRTUAL_HOST=$VIRTUAL_HOST
+      - VIRTUAL_PORT=3000
     build:
       context: ./app/
     command: npm start
@@ -14,3 +17,4 @@ services:
       - /var/run/docker.sock:/tmp/docker.sock:ro
     ports:
       - 3000:3000
+      - 80:80
