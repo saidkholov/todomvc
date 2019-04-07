@@ -32,7 +32,7 @@ review:
 stop_review:
   stage: deploy
   script:
-    - docker-compose -p $CI_COMMIT_REF_SLUG down
+    - docker-compose -p $CI_COMMIT_REF_SLUG rm --force --stop client
     - rm -rf /home/gitlab-runner/deployment/$CI_COMMIT_REF_SLUG
   variables:
     GIT_STRATEGY: none

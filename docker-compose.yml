@@ -24,6 +24,5 @@ services:
       - shared
 networks:
   shared:
-    external:
-      name: shared
-      driver: bridge
+    name: shared
+    driver: bridge
