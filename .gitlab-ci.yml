@@ -17,10 +17,10 @@ test:
 review:
   stage: deploy
   script:
-    - rsync -av --delete app/coverage/lcov-report app/public/lcov-report #copy coverage to public folder
     - rsync -av --delete . /home/gitlab-runner/deployment/$CI_COMMIT_REF_SLUG
     - cd /home/gitlab-runner/deployment/$CI_COMMIT_REF_SLUG
     - VIRTUAL_HOST=$CI_COMMIT_REF_SLUG.$APPS_DOMAIN docker-compose -p $CI_COMMIT_REF_SLUG up -d client
+    - docker-compose exec -T client npm run test:ci # a workaround for coverage
   environment:
     name: review/$CI_COMMIT_REF_SLUG
     url: http://$CI_COMMIT_REF_SLUG.$APPS_DOMAIN
@@ -45,10 +45,10 @@ stop_review:
 staging:
   stage: deploy
   script:
-    - rsync -av --delete app/coverage/lcov-report app/public/lcov-report #copy coverage to public folder
     - rsync -av --delete . /home/gitlab-runner/deployment/staging
     - cd /home/gitlab-runner/deployment/staging
     - VIRTUAL_HOST=$APPS_DOMAIN docker-compose up -d client
+    - docker-compose exec -T client npm run test:ci # a workaround for coverage
   environment:
     name: staging
     url: http://$APPS_DOMAIN
