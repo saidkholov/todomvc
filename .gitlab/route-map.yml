@@ -1,3 +1,3 @@
 # Code coverage
-- source: 'coverage/lcov-report/index.html'
-  public: 'code-coverage/'
+- source: 'app/public/lcov-report/index.html'
+  public: 'lcov-report/'
