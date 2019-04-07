@@ -21,6 +21,8 @@ review:
     - cd /home/gitlab-runner/deployment/$CI_COMMIT_REF_SLUG
     - VIRTUAL_HOST=$CI_COMMIT_REF_SLUG.$APPS_DOMAIN docker-compose -p $CI_COMMIT_REF_SLUG up -d client
     - docker-compose exec -T client npm run test:ci # a workaround for coverage
+  variables:
+    GIT_STRATEGY: none
   environment:
     name: review/$CI_COMMIT_REF_SLUG
     url: http://$CI_COMMIT_REF_SLUG.$APPS_DOMAIN
@@ -49,6 +51,8 @@ staging:
     - cd /home/gitlab-runner/deployment/staging
     - VIRTUAL_HOST=$APPS_DOMAIN docker-compose up -d client
     - docker-compose exec -T client npm run test:ci # a workaround for coverage
+  variables:
+    GIT_STRATEGY: none
   environment:
     name: staging
     url: http://$APPS_DOMAIN
