@@ -10,7 +10,7 @@ services:
     volumes:
       - ./app/:/app/
       - /app/node_modules
-      - /app/coverage
+      - ./app/coverage:/app/coverage
     networks:
       - shared
   proxy:
