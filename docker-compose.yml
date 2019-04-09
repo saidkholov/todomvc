@@ -8,9 +8,7 @@ services:
       context: ./app/
     command: npm start
     volumes:
-      - ./app/:/app/
-      - /app/node_modules
-      - /app/public/coverage
+      - ./app/public/coverage:/app/public/coverage
     networks:
       - shared
   proxy:
